@@ -1,2 +1,2 @@
 # app
-Web app which swatches colours from pictures
+[Web app](https://ynap-hackday.github.io/app/) which swatches colours from pictures
