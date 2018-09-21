@@ -29,7 +29,9 @@
 /* COMPARISON FORMATTING */
 
 #productImage{
+  margin-top: 50px;
   height: 500px;
+  margin-bottom: 50px;
 }
 
 .prodImg-small {
