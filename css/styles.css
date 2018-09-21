@@ -1,3 +1,4 @@
+/* MAIN FORMATTING */
 #swatchHolder{
   width: fit-content;
   display: inline-block;
@@ -15,9 +16,32 @@
   border: 1px gray solid;
 }
 
+.swatch-small{
+  height: 50px;
+  width: 50px;
+  margin: 0;
+  padding: 0px 10px;
+  /* float: left; */
+  /* display: inline; */
+  border: 1px gray solid;
+}
+
+/* COMPARISON FORMATTING */
+
 #productImage{
   height: 500px;
 }
+
+.prodImg-small {
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+#compareHolder{
+  padding-top: 20px;
+}
+
+/* OTHER  */
 
 body{
   text-align: center;
@@ -25,4 +49,13 @@ body{
 
 .images{
   display: block
+}
+
+h3{
+  margin-top: 20px;
+  text-align: center;
+}
+
+.row{
+  display: inline-block;
 }

@@ -87,7 +87,6 @@ var img8 = [
   [77,66,120]
 ]
 
-var allColors = img1.concat(img2, img3, img4, img5, img6, img7)
-console.log(allColors)
+var allColors = img1.concat(img2, img3, img4, img5, img6, img7, img8)
 
 // 64 total highest index 63

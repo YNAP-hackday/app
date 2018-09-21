@@ -40,6 +40,7 @@ function leftClick() {
 	}
 
 	setTimeout(analyseImage, 100);
+	document.getElementById('compareHolder').innerHTML = '';
 }
 
 function rightClick() {
@@ -64,6 +65,7 @@ function rightClick() {
 	}
 
 	setTimeout(analyseImage, 100);
+	document.getElementById('compareHolder').innerHTML = '';
 }
 
 /////////////////////
@@ -86,6 +88,7 @@ function populatePalette(palette) {
 
 	palette.forEach(function(singlePalette) {
 		var div = document.createElement("div")
+		div.addEventListener('click', getColor);
 		document.getElementById('swatchHolder').appendChild(div)
 		div.classList.add('swatch')
 
@@ -113,33 +116,101 @@ function compareColor(palette) {
 			color[2] <= domColor[2] + 20 &&
 			color[2] >= domColor[2] - 20) {
 
-		console.log(`match success! rgb color: ${color}, index: ${allColors.indexOf(color)}`)
+		var matchImg = Math.floor(allColors.indexOf(color) / 8);
+		console.log(`match success! rgb color: ${color}, index: ${allColors.indexOf(color)}, matchImg: ${matchImg}`)
 
+		color.push(matchImg);
 
+		showCompare(color)
 	}})
+}
 
-	// comparing each colour of img2 to dominant colour of palette
-	//
-	// img1.forEach(function(color) {
-	// 	// compare each rgb value of colour to palette colour
-	// 	if (color[0] <= palette[0][0] + 20 && color[0] >= palette[0][0] - 20) {
-	// 		if (color[1] <= palette[0][1] + 20 && color[1] >= palette[0][1] - 20) {
-	// 			if (color[2] <= palette[0][2] + 20 && color[2] >= palette[0][2] - 20) {
-	// 				console.log(color, ' color match!')
-	// 				return true;
-	// 			} else {
-	// 				console.log(color, 'B no colour match')
-	// 				return false;
-	// 			}
-	// 		} else {
-	// 			console.log(color, 'G no colour match')
-	// 			return false;
-	// 		}
-	// 	} else {
-	// 		console.log(color, 'R no colour match')
-	// 		return false;
-	// 	}
+function showCompare(color) {
+	// fetch variables
+	var color = color;
+	var img = color.pop()
+
+	// elemetns to add
+	var div = document.createElement("div")
+	var compareImg = document.createElement("img")
+
+	console.info(color)
+	console.info(img)
+
+	// add color div
+
+	document.getElementById('compareHolder').appendChild(div)
+	div.classList.add('swatch-small')
+  div.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`
+
+	// add image of the product
+	document.getElementById('compareHolder').appendChild(compareImg)
+	compareImg.src = urlArr[img];
+	compareImg.classList.add('prodImg-small')
+
+	// updateSwatches();
+}
+
+///////////////////////////
+// CLICKING TO GET COLOR //
+///////////////////////////
+
+
+// links swatches
+// function updateSwatches() {
+// 	var swatches = document.getElementsByClassName('swatch')
+// 	console.log(swatches)
+// 	for (var i = 0; i < swatches.length; i++) {
+// 	    swatches[i]
+// 	}
+// }
+
+
+function getColor() {
+	if (event.target.classList.contains('swatch') == true) {
+		var newColor = this.style.backgroundColor;
+		console.log("yeehaw ",newColor)
+		compareNewColor(newColor)
+	}
+
+}
+
+function compareNewColor(newColor) {
+
+	document.getElementById('compareHolder').innerHTML = '';
+	console.log('newcolor' + newColor)
+
+	var newColor = newColor
+
+	console.log(newColor);
+
+	newColor = newColor.substring(4, newColor.length-1)
+         .replace(/ /g, '')
+         .split(',');
+
+	// newColor.forEach(function(el) {
+	// 	return parseInt(el, 10);
 	// })
 
+	newColor = newColor.map(Number)
+
+	console.log(newColor);
+
+	allColors.forEach(function(color) {
+		if
+			(color[0] <= newColor[0] + 20 &&
+			color[0] >= newColor[0] - 20 &&
+			color[1] <= newColor[1] + 20 &&
+			color[1] >= newColor[1] - 20 &&
+			color[2] <= newColor[2] + 20 &&
+			color[2] >= newColor[2] - 20) {
+
+		var matchImg = Math.floor(allColors.indexOf(color) / 8)
+		// console.log(`match success! rgb color: ${color}, index: ${allColors.indexOf(color)}, matchImg: ${matchImg}`)
+
+		color.push(matchImg);
+
+		showCompare(color)
+	}})
 
 }
