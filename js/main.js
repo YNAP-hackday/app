@@ -21,7 +21,6 @@ document.getElementById('rightButton').addEventListener('click', rightClick);
 function leftClick() {
 	var img = document.getElementById("productImage").src;
 
-	console.log(img)
 	if ( img.includes(urlArr[0]) ) {
 		document.getElementById("productImage").src = urlArr[7];
 	} else if ( img.includes(urlArr[1]) ) {
@@ -46,7 +45,6 @@ function leftClick() {
 function rightClick() {
 	var img = document.getElementById("productImage").src;
 
-	console.log(img)
 	if ( img.includes(urlArr[0]) ) {
 		document.getElementById("productImage").src = urlArr[1];
 	} else if ( img.includes(urlArr[1]) ) {
@@ -62,7 +60,7 @@ function rightClick() {
 	} else if ( img.includes(urlArr[6]) ) {
 		document.getElementById("productImage").src = urlArr[7];
 	} else if ( img.includes(urlArr[7]) ) {
-		document.getElementById("productImage").src = urlArr[8];
+		document.getElementById("productImage").src = urlArr[0];
 	}
 
 	setTimeout(analyseImage, 100);
@@ -75,29 +73,16 @@ function rightClick() {
 function analyseImage() {
 	var colorThief = new ColorThief();
 	var sourceImage = document.getElementById("productImage");
-
-	var domcolor = colorThief.getColor(sourceImage)
-	console.log("domcolor", domcolor);
-
-	var palette = colorThief.getPalette(sourceImage)
-	console.log("palette", palette);
-
-	populatePalette(domcolor, palette);
+	var palette = colorThief.getPalette(sourceImage, 9)
+	populatePalette(palette);
 }
 
-function populatePalette(domcolor, palette) {
+function populatePalette(palette) {
 	// clear previous palette
 	document.getElementById('swatchHolder').innerHTML = '';
 
 	// populate new palette
-	var domcolor = domcolor;
 	var palette = palette;
-
-	var div = document.createElement("div")
-	document.getElementById('swatchHolder').appendChild(div)
-	div.classList.add('swatch')
-
-	div.style.backgroundColor = `rgb(${domcolor[0]}, ${domcolor[1]}, ${domcolor[2]})`
 
 	palette.forEach(function(singlePalette) {
 		var div = document.createElement("div")
@@ -107,11 +92,54 @@ function populatePalette(domcolor, palette) {
 		div.style.backgroundColor = `rgb(${singlePalette[0]}, ${singlePalette[1]}, ${singlePalette[2]})`
 	})
 
+	compareColor(palette);
 }
 
 analyseImage();
 
-/// not used yet
-function _getRandomNumber(min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
+//////////////////////////
+// getting other images //
+//////////////////////////
+
+function compareColor(palette) {
+	var domColor = palette[0];
+
+	allColors.forEach(function(color) {
+		if
+			(color[0] <= domColor[0] + 20 &&
+			color[0] >= domColor[0] - 20 &&
+			color[1] <= domColor[1] + 20 &&
+			color[1] >= domColor[1] - 20 &&
+			color[2] <= domColor[2] + 20 &&
+			color[2] >= domColor[2] - 20) {
+
+		console.log(`match success! rgb color: ${color}, index: ${allColors.indexOf(color)}`)
+
+
+	}})
+
+	// comparing each colour of img2 to dominant colour of palette
+	//
+	// img1.forEach(function(color) {
+	// 	// compare each rgb value of colour to palette colour
+	// 	if (color[0] <= palette[0][0] + 20 && color[0] >= palette[0][0] - 20) {
+	// 		if (color[1] <= palette[0][1] + 20 && color[1] >= palette[0][1] - 20) {
+	// 			if (color[2] <= palette[0][2] + 20 && color[2] >= palette[0][2] - 20) {
+	// 				console.log(color, ' color match!')
+	// 				return true;
+	// 			} else {
+	// 				console.log(color, 'B no colour match')
+	// 				return false;
+	// 			}
+	// 		} else {
+	// 			console.log(color, 'G no colour match')
+	// 			return false;
+	// 		}
+	// 	} else {
+	// 		console.log(color, 'R no colour match')
+	// 		return false;
+	// 	}
+	// })
+
+
 }
